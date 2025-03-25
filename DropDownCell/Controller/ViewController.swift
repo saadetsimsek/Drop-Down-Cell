@@ -45,6 +45,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCollectionViewCell.identifier, for: indexPath) as? QuestionCollectionViewCell else {
             return UICollectionViewCell()
         }
+        cell.selectAnswer = { [weak self] _ in
+            
+        }
         return cell
     }
     

@@ -11,6 +11,8 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "QuestionCollectionViewCell"
     
+    var selectAnswer: ((String) -> Void)?
+    
     var quiz: Quiz? = nil {
         willSet {
             
@@ -79,6 +81,23 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func oneQuestionItemF(item: QuizAnswer) -> UIView {
+        OneQuestionItem(item: item) {[weak self] answer in
+            guard let self = self else { return }
+            self.selectAnswer?(answer.answer)
+            
+            self.itemStackView.arrangedSubviews.forEach{ view in
+                guard let selectedView = view as? OneQuestionItem else {
+                    return
+                }
+                selectedView.contentView.backgroundColor = selectedView.restorationIdentifier == answer.id ? .systemBlue : .systemGray
+                
+                selectedView.contentLabel.textColor = selectedView.restorationIdentifier == answer.id ? .white : .black
+                
+            }
+        }
     }
     
     func setConstraints(){
