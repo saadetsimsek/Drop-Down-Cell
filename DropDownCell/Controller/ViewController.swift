@@ -8,25 +8,45 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private let question = Quiz.mockData()
+    
+    private let sizingCell = QuestionCollectionViewCell()
+    
     lazy var collectionView: UICollectionView = {
-        let layout = $0.collectionViewLayout as! UICollectionViewFlowLayout
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 20
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
-        $0.register(DropDownCell.self, forCellWithReuseIdentifier: "DropDownCell")
-        $0.delegate = self
-        $0.dataSource = self
-        
-        return layout
-    }(UICollectionView(frame: view.bounds,
-                       collectionViewLayout: UICollectionViewFlowLayout()))
+        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView.register(QuestionCollectionViewCell.self, forCellWithReuseIdentifier: QuestionCollectionViewCell.identifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.allowsMultipleSelection = true // birden fazla öğenin aynı anda seçilmesine izin verir.
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .blue
+        view.addSubview(collectionView)
     }
-
-
 }
 
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return question.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCollectionViewCell.identifier, for: indexPath) as? QuestionCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        return cell
+    }
+    
+    
+}
