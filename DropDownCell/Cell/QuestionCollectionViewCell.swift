@@ -17,10 +17,16 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         willSet {
             
             newValue?.answers.forEach { item in
-                
+                itemStackView.addArrangedSubview(oneQuestionItemF(item: item))
             }
             
             questionLabel.text = newValue?.questionText
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            
         }
     }
     
@@ -83,6 +89,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //Updates the interface based on the selected answer
     private func oneQuestionItemF(item: QuizAnswer) -> UIView {
         OneQuestionItem(item: item) {[weak self] answer in
             guard let self = self else { return }
@@ -100,8 +107,34 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    private func updateCell(){
+        
+    }
+    
     func setConstraints(){
         NSLayoutConstraint.activate([
+            cellHeader.topAnchor.constraint(equalTo: contentView.topAnchor),
+            cellHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellHeader.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 60),
+            
+            checkImage.centerYAnchor.constraint(equalTo: cellHeader.centerYAnchor),
+            checkImage.leadingAnchor.constraint(equalTo: cellHeader.leadingAnchor, constant: 15),
+            
+            questionLabel.topAnchor.constraint(equalTo: cellHeader.topAnchor, constant: 15),
+            questionLabel.bottomAnchor.constraint(equalTo: cellHeader.bottomAnchor, constant: -15),
+            questionLabel.leadingAnchor.constraint(equalTo: checkImage.trailingAnchor, constant: 10),
+            questionLabel.trailingAnchor.constraint(equalTo: cellHeader.trailingAnchor, constant: -30),
+            
+            cellContent.topAnchor.constraint(equalTo: cellHeader.bottomAnchor, constant: 10),
+            cellContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellContent.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            itemStackView.topAnchor.constraint(equalTo: cellContent.topAnchor, constant: 10),
+            itemStackView.leadingAnchor.constraint(equalTo: cellContent.leadingAnchor, constant: 15),
+            itemStackView.trailingAnchor.constraint(equalTo: cellContent.trailingAnchor, constant: -15),
+            itemStackView.bottomAnchor.constraint(equalTo: cellContent.bottomAnchor, constant: -10)
             
         ])
     }
