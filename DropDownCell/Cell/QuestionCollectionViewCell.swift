@@ -11,9 +11,22 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "QuestionCollectionViewCell"
     
+    var quiz: Quiz? = nil {
+        willSet {
+            
+            newValue?.answers.forEach { item in
+                
+            }
+            
+            questionLabel.text = newValue?.questionText
+        }
+    }
+    
     lazy var cellHeader : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(questionLabel)
+        view.addSubview(checkImage)
         view.backgroundColor = .systemGray6
         return view
     }()
@@ -32,6 +45,8 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.widthAnchor.constraint(equalToConstant: 46).isActive = true
         image.heightAnchor.constraint(equalToConstant: 46).isActive = true
+        image.image = .check0
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -72,3 +87,4 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         ])
     }
 }
+
