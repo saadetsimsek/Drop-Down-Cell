@@ -28,7 +28,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            
+            updateCell()
         }
     }
     
@@ -121,6 +121,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     func setConstraints(){
         
         stackBottomAnchor =      itemStackView.bottomAnchor.constraint(equalTo: cellContent.bottomAnchor, constant: -10)
+        stackBottomAnchor?.priority = .defaultHigh
         
         NSLayoutConstraint.activate([
             cellHeader.topAnchor.constraint(equalTo: contentView.topAnchor),

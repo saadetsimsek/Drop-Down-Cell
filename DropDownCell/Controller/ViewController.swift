@@ -67,5 +67,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         return true
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size = sizingCell.systemLayoutSizeFitting(CGSize(width: view.frame.width - 60,
+                                                             height: 0), withHorizontalFittingPriority: .required, verticalFittingPriority:.defaultLow)
+        return size
+    }
     
 }
