@@ -64,6 +64,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .white
         view.addSubview(itemStackView)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapContent)))
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -92,6 +93,10 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func tapContent(){
+        
     }
     
     //Updates the interface based on the selected answer
@@ -137,7 +142,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
             questionLabel.leadingAnchor.constraint(equalTo: checkImage.trailingAnchor, constant: 10),
             questionLabel.trailingAnchor.constraint(equalTo: cellHeader.trailingAnchor, constant: -30),
             
-            cellContent.topAnchor.constraint(equalTo: cellHeader.bottomAnchor, constant: 10),
+            cellContent.topAnchor.constraint(equalTo: cellHeader.bottomAnchor),
             cellContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cellContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             cellContent.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),

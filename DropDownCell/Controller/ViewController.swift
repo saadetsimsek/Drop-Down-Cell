@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     
     private let sizingCell = QuestionCollectionViewCell()
     
+    private var selectedAnswers: [String: String] = [:]
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -47,9 +49,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             return UICollectionViewCell()
         }
         cell.quiz = question[indexPath.item]
-      //  cell.selectAnswer = { [weak self] _ in
-            
-        //}
+        cell.selectAnswer = { [weak self] in
+            guard let self = self else {return}
+            let questionText = question[indexPath.item].questionText
+            self.selectedAnswers[questionText] = $0
+        }
         return cell
     }
     
@@ -58,6 +62,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                                   animated: true,
                                   scrollPosition: [])
         collectionView.performBatchUpdates(nil)
+        
+        print(selectedAnswers)
         return true
     }
     
