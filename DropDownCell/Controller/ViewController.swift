@@ -32,6 +32,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .blue
         view.addSubview(collectionView)
+        
     }
 }
 
@@ -45,10 +46,25 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCollectionViewCell.identifier, for: indexPath) as? QuestionCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.selectAnswer = { [weak self] _ in
+        cell.quiz = question[indexPath.item]
+      //  cell.selectAnswer = { [weak self] _ in
             
-        }
+        //}
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        collectionView.selectItem(at: indexPath,
+                                  animated: true,
+                                  scrollPosition: [])
+        collectionView.performBatchUpdates(nil)
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        collectionView.performBatchUpdates(nil)
+        return true
     }
     
     

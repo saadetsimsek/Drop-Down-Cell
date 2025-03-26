@@ -13,6 +13,8 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     
     var selectAnswer: ((String) -> Void)?
     
+    private var stackBottomAnchor: NSLayoutConstraint?
+    
     var quiz: Quiz? = nil {
         willSet {
             
@@ -72,6 +74,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         stack.spacing = 9
         stack.alignment = .fill
         stack.distribution = .fill
+        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
@@ -83,6 +86,8 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         
         contentView.addSubview(cellHeader)
         contentView.addSubview(cellContent)
+        
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -104,14 +109,19 @@ class QuestionCollectionViewCell: UICollectionViewCell {
                 selectedView.contentLabel.textColor = selectedView.restorationIdentifier == answer.id ? .white : .black
                 
             }
+            checkImage.image = .check1
         }
     }
     
     private func updateCell(){
+        stackBottomAnchor?.isActive = isSelected
         
     }
     
     func setConstraints(){
+        
+        stackBottomAnchor =      itemStackView.bottomAnchor.constraint(equalTo: cellContent.bottomAnchor, constant: -10)
+        
         NSLayoutConstraint.activate([
             cellHeader.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -134,7 +144,7 @@ class QuestionCollectionViewCell: UICollectionViewCell {
             itemStackView.topAnchor.constraint(equalTo: cellContent.topAnchor, constant: 10),
             itemStackView.leadingAnchor.constraint(equalTo: cellContent.leadingAnchor, constant: 15),
             itemStackView.trailingAnchor.constraint(equalTo: cellContent.trailingAnchor, constant: -15),
-            itemStackView.bottomAnchor.constraint(equalTo: cellContent.bottomAnchor, constant: -10)
+       
             
         ])
     }

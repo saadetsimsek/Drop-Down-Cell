@@ -43,6 +43,8 @@ final class OneQuestionItem: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         restorationIdentifier = item.id // uygulama kapansa bile belirli bir bileşeni tanımlamak ve geri yüklemek için kullanılır
         addSubview(contentView)
+        
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
